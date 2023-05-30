@@ -20,7 +20,6 @@ export default function Home() {
 
 
     const sortedData = data?.sort((a, b) => b.stargazers_count - a.stargazers_count);
-    // const sortedData = data;
 
     const handleChangeOrientation = (type: "grid" | "list") => {
         setOrientation(type);
@@ -65,5 +64,4 @@ export default function Home() {
                 </div>
             </div>;
     }
-    return <div></div>;
 }

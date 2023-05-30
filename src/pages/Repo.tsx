@@ -13,16 +13,17 @@ import { RepoCommit } from "../lib/types/commits";
 import { BASE_URL } from "../lib/constants";
 import { useQuery } from "@tanstack/react-query";
 import { CommitCard } from "../components/cards/CommitCard";
+import { useState } from "react";
 
-const fetchCommits = async ({ owner, repoName }: { owner: any, repoName: any; }): Promise<RepoCommit[]> => {
-    const res = await fetch(`${BASE_URL}/repos/${owner}/${repoName}/commits`);
+const fetchCommits = async ({ owner, repoName, page }: { owner: any, repoName: any; page: number; }): Promise<RepoCommit[]> => {
+    const res = await fetch(`${BASE_URL}/repos/${owner}/${repoName}/commits?page=${page}`);
     return res.json();
 };
 
 export default function Repo() {
-
+    const [page, setPage] = useState(1);
     let { owner, repoName } = useParams();
-    const { data, status } = useQuery([owner, repoName], () => fetchCommits({ owner, repoName }));
+    const { data, status } = useQuery([owner, repoName, page], () => fetchCommits({ owner, repoName, page }));
 
     const groupedCommits = groupCommits(data);
 
@@ -37,9 +38,14 @@ export default function Repo() {
                     <h1 className="text-4xl">{owner}/{repoName} </h1>
                     <p>Commit history</p>
                 </div>
-                <div className="space-y-4  w-full mx-auto">
-                    <CommitCard props={groupedCommits} />
+                <div className="space-y-4  2xl:w-3/4 xl:w-3/4 lg:w-3/4 w-full mx-auto">
+                    {groupCommits !== null ? <CommitCard props={groupedCommits} /> : <p>Data not available</p>}
                     {/* {data ? data.map((commit) => <CommitCard {...commit} />) : <p>Not found</p>} */}
+
+                    <div className="space-x-4 py-4">
+                        {page > 1 ? <button onClick={() => setPage(prev => prev - 1)}>Previous Page</button> : null}
+                        <button onClick={() => setPage(prev => prev + 1)}>Next Page</button>
+                    </div>
                 </div>
 
             </div>;
