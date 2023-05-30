@@ -37,7 +37,7 @@ export default function Repo() {
                     <h1 className="text-4xl">{owner}/{repoName} </h1>
                     <p>Commit history</p>
                 </div>
-                <div className="space-y-4 w-3/4 mx-auto">
+                <div className="space-y-4  w-full mx-auto">
                     <CommitCard props={groupedCommits} />
                     {/* {data ? data.map((commit) => <CommitCard {...commit} />) : <p>Not found</p>} */}
                 </div>
