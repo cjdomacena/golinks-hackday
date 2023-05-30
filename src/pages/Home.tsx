@@ -18,8 +18,8 @@ export default function Home() {
     const { data, status } = useQuery({ queryKey: ["netflix"], queryFn: fetchOrgRepos });
     const [orientation, setOrientation] = useState<"grid" | "list">("grid");
 
-    // const sortedData = data?.sort((a, b) => a.stargazers_count - b.stargazers_count);
-    const sortedData = data;
+    const sortedData = data?.sort((a, b) => b.stargazers_count - a.stargazers_count);
+    // const sortedData = data;
 
     const handleChangeOrientation = (type: "grid" | "list") => {
         setOrientation(type);
