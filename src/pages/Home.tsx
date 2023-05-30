@@ -8,7 +8,7 @@ import { BsGrid, BsList } from 'react-icons/bs';
 
 const fetchOrgRepos = async (): Promise<OrgRepo[]> => {
 
-    const res = await fetch(`${BASE_URL}/orgs/Netflix/repos?per_page=20`);
+    const res = await fetch(`${BASE_URL}/orgs/Netflix/repos`);
     return res.json();
 
 };
