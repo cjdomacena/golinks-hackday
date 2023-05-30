@@ -1,15 +1,17 @@
 import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Repo from "./pages/Repo";
 
 function App() {
 
 
     return (
-        <div>
+        <main className=" min-w-screen">
             <Routes>
-                <Route path="/dashboard" element={<div><h1>Hello</h1></div>} />
+                <Route path="/" element={<Home />} />
+                <Route path=":owner/:repoName/:branch" element={<Repo />} />
             </Routes>
-
-        </div>
+        </main>
     );
 }
 
