@@ -5,7 +5,7 @@ export interface RepoCommit {
   url: string;
   html_url: string;
   comments_url: string;
-  author: Author2;
+  author?: Author2;
   committer: Committer2;
   parents: Parent[];
   stats: Stats;
@@ -47,7 +47,7 @@ export interface Verification {
 }
 
 export interface Author2 {
-  login: string;
+  login?: string;
   id: number;
   node_id: string;
   avatar_url: string;

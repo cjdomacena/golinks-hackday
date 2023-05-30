@@ -35,17 +35,18 @@ export const CommitCard = ({ props }: { props: CommitCardProps; }) => {
 
 };
 
-export const CommitCardItems = ({ sha, commit: { message, author: { date } }, author: { login, avatar_url } }: RepoCommit) => {
+export const CommitCardItems = ({ sha, commit: { message, author: { date } }, ...props }: RepoCommit) => {
 
     const [copied, setCopied] = useState(false);
+    const author = props.hasOwnProperty("author") ? props.author : null;
 
     return <div className=" p-3 border-b border-slate-700 w-full hover:bg-slate-700 transition-colors">
         <div className="flex gap-2 justify-between  items-center w-full flex-wrap">
             <div className="max-w-md w-full space-y-2">
                 <h4 className="max-w-md truncate  font-semibold text-sm">{message}</h4>
                 <div className="flex gap-1 items-center">
-                    <img src={avatar_url} width={25} height={25} className="rounded-full" />
-                    <p>{login}</p>
+                    {author && author.avatar_url ? <img src={author.avatar_url} width={25} height={25} className="rounded-full" /> : <div className="w-[25px] h-[25px] bg-slate-800 rounded-full"></div>}
+                    <p>{author && author.login ? author.login : "[deleted]"}</p>
                     <p className="text-xs">committed {new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "medium" }).format(new Date(date))}</p>
                 </div>
             </div>
