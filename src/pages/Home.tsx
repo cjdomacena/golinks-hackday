@@ -6,17 +6,18 @@ import { useState } from "react";
 import { BsGrid, BsList } from 'react-icons/bs';
 
 
-const fetchOrgRepos = async (): Promise<OrgRepo[]> => {
+const fetchOrgRepos = async (page: number): Promise<OrgRepo[]> => {
 
-    const res = await fetch(`${BASE_URL}/orgs/Netflix/repos`);
+    const res = await fetch(`${BASE_URL}/orgs/Netflix/repos?page=${page}`);
     return res.json();
 
 };
 
 export default function Home() {
-
-    const { data, status } = useQuery({ queryKey: ["netflix"], queryFn: fetchOrgRepos });
+    const [page, setPage] = useState(1);
+    const { data, status } = useQuery({ queryKey: ["netflix", page], queryFn: () => fetchOrgRepos(page) });
     const [orientation, setOrientation] = useState<"grid" | "list">("grid");
+
 
     const sortedData = data?.sort((a, b) => b.stargazers_count - a.stargazers_count);
     // const sortedData = data;
@@ -58,7 +59,10 @@ export default function Home() {
                 <div className={`grid ${orientation === "grid" ? "grid-cols-[repeat(auto-fill,minmax(280px,1fr))]" : "grid-cols-1"}  gap-4`}>
                     {sortedData ? sortedData.map((repo) => <RepoCard {...repo} key={repo.id} />) : <p>No repositories available.</p>}
                 </div>
-
+                <div className="mt-12 space-x-4">
+                    {page > 1 ? <button onClick={() => setPage(prev => prev - 1)}>Previous Page</button> : null}
+                    <button onClick={() => setPage(prev => prev + 1)}>Next Page</button>
+                </div>
             </div>;
     }
     return <div></div>;
