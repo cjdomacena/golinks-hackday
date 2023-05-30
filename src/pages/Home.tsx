@@ -56,11 +56,11 @@ export default function Home() {
                     <h1 className="text-xl font-bold">Netflix Repositories</h1>
                 </div>
                 <div className={`grid ${orientation === "grid" ? "grid-cols-[repeat(auto-fill,minmax(280px,1fr))]" : "grid-cols-1"}  gap-4`}>
-                    {sortedData ? sortedData.map((repo) => <RepoCard {...repo} key={repo.id} />) : <p>No repositories available.</p>}
+                    {sortedData && sortedData.length > 0 ? sortedData.map((repo) => <RepoCard {...repo} key={repo.id} />) : <p>No repositories available.</p>}
                 </div>
                 <div className="mt-12 space-x-4">
                     {page > 1 ? <button onClick={() => setPage(prev => prev - 1)}>Previous Page</button> : null}
-                    <button onClick={() => setPage(prev => prev + 1)}>Next Page</button>
+                    {sortedData && sortedData.length > 0 ? <button onClick={() => setPage(prev => prev + 1)}>Next Page</button> : null}
                 </div>
             </div>;
     }
